@@ -1,4 +1,4 @@
-
+```bash
 #!/bin/bash
 # ================================================
 # Freeloader Installer for Supermon
@@ -19,14 +19,23 @@ echo "=================================================="
 echo "🚀 Starting Freeloader Installer"
 echo "=================================================="
 
-# STEP 1-3: Update + Git + Clone
+# ------------------------------------------------
+# Step 1 - Update package list
+# ------------------------------------------------
 echo "Step 1: Updating package list..."
 apt-get update -qq
 
+# ------------------------------------------------
+# Step 2 - Install git
+# ------------------------------------------------
 echo "Step 2: Installing git if needed..."
 apt-get install -y git
 
+# ------------------------------------------------
+# Step 3 - Clone or update repository
+# ------------------------------------------------
 echo "Step 3: Getting latest files from n5ad/freeloader..."
+
 if [ -d "/tmp/freeloader/.git" ]; then
     cd /tmp/freeloader
     git pull
@@ -35,7 +44,9 @@ else
     git clone https://github.com/n5ad/freeloader.git /tmp/freeloader
 fi
 
-# STEP 4: /my_uploads
+# ------------------------------------------------
+# Step 4 - Create upload directory
+# ------------------------------------------------
 echo "Step 4: Creating /my_uploads directory..."
 
 mkdir -p /my_uploads
@@ -51,72 +62,108 @@ chmod -R 2775 /my_uploads
 
 echo "✅ /my_uploads ready"
 
-# STEP 5: Create freeloader directory
-echo "Step 5: Creating freeloader subdirectory..."
+# ------------------------------------------------
+# Step 5 - Create freeloader directory
+# ------------------------------------------------
+echo "Step 5: Creating freeloader directory..."
 
 mkdir -p /var/www/html/supermon/custom/freeloader
-chown -R www-data:www-data /var/www/html/supermon/custom/freeloader
 
-# STEP 6: Install freeloader.inc
+chown -R www-data:www-data \
+    /var/www/html/supermon/custom/freeloader
+
+# ------------------------------------------------
+# Step 6 - Install freeloader.inc
+# ------------------------------------------------
 echo "Step 6: Installing freeloader.inc..."
 
-cp /tmp/freeloader/freeloader.inc /var/www/html/supermon/custom/
-chown www-data:www-data /var/www/html/supermon/custom/freeloader.inc
-chmod 644 /var/www/html/supermon/custom/freeloader.inc
+cp /tmp/freeloader/freeloader.inc \
+   /var/www/html/supermon/custom/
 
-# STEP 7: Install backend PHP files
-echo "Step 7: Installing PHP backend files..."
+chown www-data:www-data \
+    /var/www/html/supermon/custom/freeloader.inc
 
-cp /tmp/freeloader/freeloader_upload.php /var/www/html/supermon/custom/freeloader/
-cp /tmp/freeloader/freeloader_delete.php /var/www/html/supermon/custom/freeloader/
+chmod 644 \
+    /var/www/html/supermon/custom/freeloader.inc
 
-chown www-data:www-data /var/www/html/supermon/custom/freeloader/*.php
-chmod 644 /var/www/html/supermon/custom/freeloader/*.php
+# ------------------------------------------------
+# Step 7 - Install PHP backend files
+# ------------------------------------------------
+echo "Step 7: Installing backend PHP files..."
 
-```bash
-# STEP 8: Insert include into footer.inc
+cp /tmp/freeloader/freeloader_upload.php \
+   /var/www/html/supermon/custom/freeloader/
+
+cp /tmp/freeloader/freeloader_delete.php \
+   /var/www/html/supermon/custom/freeloader/
+
+chown www-data:www-data \
+    /var/www/html/supermon/custom/freeloader/*.php
+
+chmod 644 \
+    /var/www/html/supermon/custom/freeloader/*.php
+
+# ------------------------------------------------
+# Step 8 - Modify footer.inc (idempotent)
+# ------------------------------------------------
 echo "Step 8: Updating footer.inc..."
 
 FOOTER_FILE="/var/www/html/supermon/footer.inc"
-BACKUP_SUFFIX=".bak.$(date +%Y%m%d_%H%M%S)"
+BACKUP_FILE="${FOOTER_FILE}.bak.$(date +%Y%m%d_%H%M%S)"
 
 if [ ! -f "$FOOTER_FILE" ]; then
-    echo "ERROR: $FOOTER_FILE not found!"
+    echo
+    echo "ERROR: footer.inc not found:"
+    echo "$FOOTER_FILE"
     exit 1
 fi
 
 if grep -qF '<?php include_once "custom/freeloader.inc"; ?>' "$FOOTER_FILE"; then
-    echo "✅ freeloader.inc include already exists. Skipping."
+
+    echo "✅ freeloader.inc already present."
+
 else
-    BACKUP_FILE="${FOOTER_FILE}${BACKUP_SUFFIX}"
+
     cp "$FOOTER_FILE" "$BACKUP_FILE"
 
-    awk '
-    BEGIN { inserted=0 }
+    echo "Backup created:"
+    echo "  $BACKUP_FILE"
 
-    /^[[:space:]]*<SCRIPT>/ && inserted==0 {
-        print "<?php include_once \"custom/freeloader.inc\"; ?>"
-        inserted=1
+    awk '
+    BEGIN {
+        inserted = 0
     }
 
-    { print }
-    ' "$BACKUP_FILE" > "$FOOTER_FILE"
+    /^[[:space:]]*<SCRIPT>/ && inserted == 0 {
+        print "<?php include_once \"custom/freeloader.inc\"; ?>"
+        inserted = 1
+    }
+
+    {
+        print
+    }
+    ' "$BACKUP_FILE" > "${FOOTER_FILE}.tmp"
+
+    mv "${FOOTER_FILE}.tmp" "$FOOTER_FILE"
 
     chmod 644 "$FOOTER_FILE"
 
-    echo "✅ Inserted freeloader.inc include into footer.inc"
-fi
-```
+    echo "✅ freeloader.inc inserted successfully."
 
+fi
+
+# ------------------------------------------------
+# Finished
+# ------------------------------------------------
 echo
 echo "=================================================="
 echo "✅ Freeloader installation completed successfully!"
 echo
-echo "Next steps:"
+echo "Please:"
 echo "  1. Hard refresh Supermon (Ctrl+Shift+R)"
-echo "  2. Confirm Freeloader appears before the JavaScript section"
+echo "  2. Verify freeloader appears before the first"
+echo "     <SCRIPT> tag in footer.inc"
 echo "  3. Test uploading a file"
 echo
-echo "Installer completed successfully."
 echo "=================================================="
-
+```
