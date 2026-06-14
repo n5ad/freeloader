@@ -135,7 +135,7 @@ else
     }
 
     /^[[:space:]]*<SCRIPT>/ && inserted == 0 {
-        print "<?php include_once \"custom/freeloader.inc\"; ?>"
+        print "<?php include_once \"custom/freeloader.inc\"; ?> <br><br>"
         inserted = 1
     }
 
