@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # ================================================
 # Freeloader Installer for Supermon
@@ -16,7 +15,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "=================================================="
-echo "🚀 Starting Freeloader Installer"
+echo " Starting Freeloader Installer"
 echo "=================================================="
 
 # ------------------------------------------------
@@ -60,7 +59,7 @@ fi
 chown -R www-data:www-data /my_uploads
 chmod -R 2775 /my_uploads
 
-echo "✅ /my_uploads ready"
+echo " /my_uploads ready"
 
 # ------------------------------------------------
 # Step 5 - Create freeloader directory
@@ -77,31 +76,24 @@ chown -R www-data:www-data \
 # ------------------------------------------------
 echo "Step 6: Installing freeloader.inc..."
 
-cp /tmp/freeloader/freeloader.inc \
-   /var/www/html/supermon/custom/
+cp /tmp/freeloader/freeloader.inc /var/www/html/supermon/custom/
 
-chown www-data:www-data \
-    /var/www/html/supermon/custom/freeloader.inc
+chown www-data:www-data /var/www/html/supermon/custom/freeloader.inc
 
-chmod 644 \
-    /var/www/html/supermon/custom/freeloader.inc
+chmod 644 /var/www/html/supermon/custom/freeloader.inc
 
 # ------------------------------------------------
 # Step 7 - Install PHP backend files
 # ------------------------------------------------
 echo "Step 7: Installing backend PHP files..."
 
-cp /tmp/freeloader/freeloader_upload.php \
-   /var/www/html/supermon/custom/freeloader/
+cp /tmp/freeloader/freeloader_upload.php /var/www/html/supermon/custom/freeloader/
 
-cp /tmp/freeloader/freeloader_delete.php \
-   /var/www/html/supermon/custom/freeloader/
+cp /tmp/freeloader/freeloader_delete.php /var/www/html/supermon/custom/freeloader/
 
-chown www-data:www-data \
-    /var/www/html/supermon/custom/freeloader/*.php
+chown www-data:www-data /var/www/html/supermon/custom/freeloader/*.php
 
-chmod 644 \
-    /var/www/html/supermon/custom/freeloader/*.php
+chmod 644 /var/www/html/supermon/custom/freeloader/*.php
 
 # ------------------------------------------------
 # Step 8 - Modify footer.inc (idempotent)
@@ -120,7 +112,7 @@ fi
 
 if grep -qF '<?php include_once "custom/freeloader.inc"; ?>' "$FOOTER_FILE"; then
 
-    echo "✅ freeloader.inc already present."
+    echo " freeloader.inc already present."
 
 else
 
@@ -148,7 +140,7 @@ else
 
     chmod 644 "$FOOTER_FILE"
 
-    echo "✅ freeloader.inc inserted successfully."
+    echo " freeloader.inc inserted successfully."
 
 fi
 
@@ -157,7 +149,7 @@ fi
 # ------------------------------------------------
 echo
 echo "=================================================="
-echo "✅ Freeloader installation completed successfully!"
+echo " Freeloader installation completed successfully!"
 echo
 echo "Please:"
 echo "  1. Hard refresh Supermon (Ctrl+Shift+R)"
