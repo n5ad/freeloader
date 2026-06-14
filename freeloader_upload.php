@@ -15,6 +15,7 @@
         addslashes($f) . "')\" style='background:#dc3545;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;'>Delete</button></td>"; echo "</tr>";
     }
     echo '</table>'; exit;
+                                                                                                                                               }
 // ====================== UPLOAD HANDLER ======================
 if (!isset($_FILES['file'])) { echo "No file uploaded."; exit;
 }
