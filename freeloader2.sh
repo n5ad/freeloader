@@ -53,46 +53,38 @@ sudo chown www-data:www-data /var/www/html/supermon/custom/freeloader/*.php
 sudo chmod 644 /var/www/html/supermon/custom/freeloader/*.php
 
 # ====================== NEW STEP 8 ======================
-echo "Step 8: Adding Freeloader include just before <SCRIPT> in footer.inc"
-FOOTER_INC="/var/www/html/supermon/footer.inc"
-BACKUP_SUFFIX=".bak.$(date +%Y%m%d-%H%M%S)"
+FOOTER_FILE="/var/www/html/supermon/footer.inc"
+BACKUP_SUFFIX=".bak.$(date +%Y%m%d_%H%M%S)"
 
-if [ ! -f "$FOOTER_INC" ]; then
-    echo " → footer.inc not found → skipping"
+if [ ! -f "$FOOTER_FILE" ]; then
+    echo "ERROR: $FOOTER_FILE not found!"
+    exit 1
+fi
+
+# Check if the include already exists
+if grep -qF '<?php include_once "custom/freeloader.inc"; ?>' "$FOOTER_FILE"; then
+    echo "freeloader.inc include already exists. Skipping."
 else
-    BACKUP_FOOTER="${FOOTER_INC}${BACKUP_SUFFIX}"
-    cp -v "$FOOTER_INC" "$BACKUP_FOOTER"
-    echo "Backup created: $BACKUP_FOOTER"
+    BACKUP_FILE="${FOOTER_FILE}${BACKUP_SUFFIX}"
+    cp -v "$FOOTER_FILE" "$BACKUP_FILE"
+    echo "Backup created: $BACKUP_FILE"
 
-    if grep -q 'freeloader\.inc' "$FOOTER_INC"; then
-        echo "Freeloader already present → skipping"
-    else
-        echo "Patching footer.inc — placing include just before <SCRIPT>..."
-        awk '
-        # Inside logged-in block
-        /if \(\$_SESSION\['"'"'sm61loggedin'"'"'\] === true\) \{/ {
+    awk '
+    /<br><br>[[:space:]]*$/ {
+        print
+        if (getline > 0) {
+            if ($0 ~ /^[[:space:]]*<SCRIPT>/) {
+                print "<?php include_once \"custom/freeloader.inc\"; ?>"
+            }
             print
-            inblock = 1
-            next
         }
-        # Insert just before the first <script> or <SCRIPT> tag
-        inblock && /<script/i {
-            print "<?php include(\"custom/freeloader.inc\"); ?>"
-            print
-            inblock = 0
-            next
-        }
-        # Fallback: if no script tag found, put before final ?>
-        inblock && /^\s*\?>\s*$/ {
-            print "<?php include(\"custom/freeloader.inc\"); ?>"
-            print
-            inblock = 0
-            next
-        }
-        { print }
-        ' "$FOOTER_INC" > "$FOOTER_INC.tmp" && mv "$FOOTER_INC.tmp" "$FOOTER_INC"
-        echo "✅ footer.inc patched — Freeloader include added just before <SCRIPT>."
-    fi
+        next
+    }
+    { print }
+    ' "$BACKUP_FILE" > "$FOOTER_FILE"
+
+    echo "Inserted freeloader.inc include into footer.inc"
+fi
 
     chown www-data:www-data "$FOOTER_INC" 2>/dev/null || true
     chmod 644 "$FOOTER_INC" 2>/dev/null || true
