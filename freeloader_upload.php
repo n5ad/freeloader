@@ -3,7 +3,7 @@
 // file upload utilty 
 // created by James N5AD
 // June 2026
-y
+?>
     
 <?php /* * Freeloader Upload + List - Any file to /my_uploads * N5AD - June 2026 */ if (isset($_GET['action']) && $_GET['action'] === 'list') { $uploadDir = '/my_uploads'; $files = 
     scandir($uploadDir); echo '<table style="width:100%; border-collapse:collapse; font-size:14px;">'; echo '<tr style="background:#34495e;color:white;"><th 
