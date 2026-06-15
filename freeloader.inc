@@ -10,7 +10,7 @@
     
     <!-- Upload Section -->
     <div class="section" style="background: #ffffff; border: 2px solid #4caf7a; border-radius: 8px; padding: 25px; margin-bottom: 25px; text-align: center;">
-        <h4 style="color:#7dd9a1; margin-top:0;">Upload File</h4>
+        <h3 style="color:#7dd9a1; margin-top:0;">Upload File</h3>
         <div style="display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 15px 0;">
             <input type="file" id="freeloader_file" style="background:#1e252f; color:#e0e0e0;">
             <button id="freeloader_upload_btn" class="submit">Upload to /my_uploads</button>
