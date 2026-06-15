@@ -82,7 +82,7 @@ loadFreeloaderFiles();
 setInterval(loadFreeloaderFiles, 20000);
 </script>
 
-<!-- Style the file list table - Darker header -->
+
 <style>
     #freeloader_filelist table {
         width: 100%;
