@@ -40,7 +40,7 @@ $("#freeloader_upload_btn").click(function() {
     formData.append("file", fileInput.files[0]);
     $("#freeloader_upload_status").text("Uploading...").css("color", "orange");
     $.ajax({
-        url: "custom/freeloader/freeloader_upload.php",
+        url: "/freeloader/freeloader_upload.php",
         type: "POST",
         data: formData,
         processData: false,
@@ -59,7 +59,7 @@ $("#freeloader_upload_btn").click(function() {
 
 // Load File List
 function loadFreeloaderFiles() {
-    $.get("custom/freeloader/freeloader_upload.php?action=list", function(html) {
+    $.get("/freeloader/freeloader_upload.php?action=list", function(html) {
         $("#freeloader_filelist").html(html);
     }).fail(function() {
         $("#freeloader_filelist").html("<p style='color:red;'>Error loading file list.</p>");
@@ -69,7 +69,7 @@ function loadFreeloaderFiles() {
 // Delete Function
 window.deleteFreeloaderFile = function(filename) {
     if (!confirm("Delete " + filename + "?")) return;
-    $.post("custom/freeloader/freeloader_delete.php", { file: filename }, function(response) {
+    $.post("/freeloader/freeloader_delete.php", { file: filename }, function(response) {
         $("#freeloader_upload_status").html(response).css("color", "green");
         loadFreeloaderFiles();
     }).fail(function() {
