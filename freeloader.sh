@@ -167,6 +167,10 @@ EOF
     echo ""
    
 fi
+echo "Restarting Apache2..."
+sudo systemctl restart apache2
+echo "Apache restarted."
+
 # ------------------------------------------------
 # Finished
 # ------------------------------------------------
