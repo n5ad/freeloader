@@ -170,7 +170,7 @@ $tmpFile = $file['tmp_name'];
 
 if (strpos($targetDir, '/etc/') === 0 || strpos($targetDir, '/usr/') === 0) {
 
-    echo "<strong>âš ï¸ Warning:</strong> Writing to system directory.<br>";
+    echo "<strong>Warning:</strong> Writing to system directory.<br>";
 
     $cmd = "sudo cp " . escapeshellarg($tmpFile) . " " . escapeshellarg($targetFile);
 
@@ -182,11 +182,11 @@ if (strpos($targetDir, '/etc/') === 0 || strpos($targetDir, '/usr/') === 0) {
 
         chmod($targetFile, 0644);
 
-        echo "<strong>âœ… SUCCESS:</strong> " . htmlspecialchars($filename) . " copied to " . htmlspecialchars($targetDir);
+        echo "<strong> SUCCESS:</strong> " . htmlspecialchars($filename) . " copied to " . htmlspecialchars($targetDir);
 
     } else {
 
-        echo "âŒ Failed to copy fil.";
+        echo "Failed to copy fil.";
 
     }
 
@@ -200,11 +200,11 @@ if (strpos($targetDir, '/etc/') === 0 || strpos($targetDir, '/usr/') === 0) {
 
         @chown($targetFile, 'www-data');
 
-        echo "<strong>âœ… SUCCESS:</strong> " . htmlspecialchars($filename) . " uploaded to " . htmlspecialchars($targetDir);
+        echo "<strong>SUCCESS:</strong> " . htmlspecialchars($filename) . " uploaded to " . htmlspecialchars($targetDir);
 
     } else {
 
-        echo "âŒ Failed to upload file.";
+        echo " Failed to upload file.";
 
     }
 
