@@ -85,14 +85,10 @@ cat > /etc/freeloader/.config.php << EOF
 \$FREELoader_PASSWORD = '$FREELoader_PASSWORD';
 ?>
 EOF
-chmod 600 /etc/freeloader/.config.php
+chmod 644 /etc/freeloader/.config.php
 chown root:root /etc/freeloader/.config.php
 echo "✅ Secure config file created."
-# ------------------------------------------------
-# Step 8 - Modify footer.inc (Supermon integration)
-# ------------------------------------------------
-echo "Step 8: Updating footer.inc..."
-# (your existing footer.inc code remains unchanged)
+
 # ------------------------------------------------
 # Final Restart
 # ------------------------------------------------
@@ -112,9 +108,7 @@ echo "Sudoers rule added successfully."
 echo
 echo "=================================================="
 echo " Freeloader installation completed successfully!"
-echo
-echo "Next steps:"
-echo "1. Hard refresh Supermon/Allmon3 (Ctrl+Shift+R)"
-echo "2. Test Freeloader at /freeloader/index.php"
-echo "3. Your password is stored securely in /etc/freeloader/.config.php"
+echo " I hope you find this tool useful!"
+echo  " 73 N5AD
+echo " Your password is stored securely in /etc/freeloader/.config.php"
 echo "=================================================="
