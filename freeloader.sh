@@ -60,6 +60,8 @@ echo "Step 6: Installing freeloader files..."
 cp /tmp/freeloader/freeloader.inc /var/www/html/freeloader/
 cp /tmp/freeloader/freeloader_upload.php /var/www/html/freeloader/
 cp /tmp/freeloader/freeloader_delete.php /var/www/html/freeloader/
+cp /tmp/freeloader/index.php /var/www/html/freeloader/   # Added index.php
+
 chown www-data:www-data /var/www/html/freeloader/*
 chmod 644 /var/www/html/freeloader/*
 # ------------------------------------------------
@@ -88,6 +90,11 @@ EOF
 chmod 644 /etc/freeloader/.config.php
 chown root:root /etc/freeloader/.config.php
 echo "✅ Secure config file created."
+# ------------------------------------------------
+# Step 8 - Modify footer.inc (Supermon integration)
+# ------------------------------------------------
+echo "Step 8: Updating footer.inc..."
+# (your existing footer.inc code remains unchanged)
 # ------------------------------------------------
 # Final Restart
 # ------------------------------------------------
