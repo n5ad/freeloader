@@ -1,9 +1,11 @@
-<img width="1081" height="383" alt="image" src="https://github.com/user-attachments/assets/3ff2a9ea-8fb3-4c03-8a81-cf6816361514" />
+
+<img width="1175" height="618" alt="image" src="https://github.com/user-attachments/assets/da1adbee-bb0e-45e7-a135-de7738a62295" />
 
 
 
 
-This is an upload utilty called freeloader because it frees the user from having to use SSH or SFTP to upload files to your node for use.
+This is an file manager utilty called freeloader because it frees the user from having to use SSH or SFTP to manage files on your Allstar Node.
+The utility requires a secure login to use. 
 Here is how to install it:
 first lets get to s specific directory after you after started an SSH session into your node or from the terminal CLI if you like. 
 
@@ -32,7 +34,7 @@ Then lets run the script using
 ```
 sudo bash freeloader.sh
 ```
-
+you will be prompted to create a password that you will need to enter in order to use the utility. Once the utility is installed, you can find it at node[your node number].local/freeloader
 
 
 
