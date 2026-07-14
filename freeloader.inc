@@ -10,7 +10,7 @@
 
 <div id="freeloader" style="background: #f8f9fa; border: 2px solid #2c3e50; border-radius: 10px; padding: 25px; margin-top: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
 
-    <h1 style="text-align:center; color:#2c3e50; margin-top:0;">Freeloader - Upload Any File</h1>
+    <h1 style="text-align:center; color:#2c3e50; margin-top:0;">Freeloader - an ASL3 File Management Utility</h1>
 
     <hr style="border: 1px solid #bdc3c7; margin: 20px 0;">
 
