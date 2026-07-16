@@ -34,8 +34,6 @@ if (!file_exists($filepath) || is_dir($filepath)) {
     die("File not found: " . htmlspecialchars($filename));
 }
 
-// Optional: Add extra security restrictions here if needed
-
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
