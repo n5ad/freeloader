@@ -1,9 +1,6 @@
 <?php
 
 // freeloader_delete.php
-
-// Supports sudo rm for system directories
-
 // N5AD - July 2026
 
 ?>
@@ -41,9 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['file'])) {
 
     }
 
-
-    // Use sudo rm for system directories
-
     if (strpos($targetDir, '/etc/') === 0 || strpos($targetDir, '/var/www/html/supermon') === 0) {
 
         $cmd = "sudo rm -f " . escapeshellarg($path);
@@ -64,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['file'])) {
 
     } else {
 
-        // Normal delete for user directories
 
         if (unlink($path)) {
 
